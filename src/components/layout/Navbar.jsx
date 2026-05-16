@@ -7,7 +7,7 @@ const navItems = [
   { label: "Find Events", href: "/events" },
   { label: "Create Events", href: "/create-event" },
   { label: "Find my tickets", href: "/my-tickets" },
-  { label: "SignUp", href: "/signup" },
+  { label: "SignIn", href: "/signin" },
 ];
 
 export default function Navbar() {
