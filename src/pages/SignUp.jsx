@@ -111,7 +111,20 @@ export default function SignUp() {
             </div>
           </div>
 
-         
+          <p className="mt-6 text-center text-xs leading-5 text-neutral-400">
+            By creating an account, you agree to Eventify&apos;s{" "}
+            <Link to="/terms" className="text-neutral-600 hover:text-orange-600">
+              Terms
+            </Link>{" "}
+            and{" "}
+            <Link
+              to="/privacy-policy"
+              className="text-neutral-600 hover:text-orange-600"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
         </div>
       </Container>
     </section>
