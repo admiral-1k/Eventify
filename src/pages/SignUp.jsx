@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.png";
 
 export default function SignUp() {
   return (
-    <section className="min-h-[calc(100vh-64px)] bg-[#fafafa] py-10 sm:py-14">
+    <section className="min-h-[calc(100vh-64px)] bg-white py-10 sm:py-14">
       <Container>
         <div className="mx-auto max-w-md">
           <div className="rounded-[28px] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
