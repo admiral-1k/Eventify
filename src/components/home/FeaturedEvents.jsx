@@ -4,9 +4,9 @@ import EventCard from "./EventCard";
 const events = [
   {
     id: 1,
-    title: "Kathmandu Live Music Night",
+    title: "Biken and The Merz live at XO club",
     category: "Music",
-    date: "June 18, 2026",
+    date: "May 14, 2026",
     location: "Kathmandu, Nepal",
     price: "Rs. 999",
     image:
