@@ -1,5 +1,6 @@
 import Container from "../common/Container";
 import EventCard from "./EventCard";
+import bandPoster from "../../assets/images/bandPoster.jpeg";
 
 const events = [
   {
@@ -9,16 +10,15 @@ const events = [
     date: "May 14, 2026",
     location: "Kathmandu, Nepal",
     price: "Rs. 999",
-    image:
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
+    image: bandPoster,
   },
   {
     id: 2,
-    title: "Startup & Business Networking Event",
-    category: "Business",
-    date: "June 22, 2026",
-    location: "Lalitpur, Nepal",
-    price: "Free",
+    title: "Nepal vs Bangladesh",
+    category: "Sports",
+    date: "June 3, 2026",
+    location: "Nehru Stadium",
+    price: "999",
     image:
       "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=1600&auto=format&fit=crop'",
   },
