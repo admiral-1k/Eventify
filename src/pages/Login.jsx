@@ -13,7 +13,7 @@ export default function Login() {
         {/* LEFT SIDE */}
         <div className="flex-1 text-white p-10 lg:p-20 flex flex-col justify-center">
 
-          <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+         <h1 className="text-4xl lg:text-5xl font-bold mb-8">
             Login Your Account
           </h1>
 
