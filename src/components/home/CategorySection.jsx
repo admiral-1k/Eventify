@@ -5,7 +5,7 @@ export default function CategorySection() {
   return (
     <section className="py-5">
       <Container>
-        <div className="grid grid-cols-4 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
+        <div className="flex flex-wrap justify-center items-center gap-12">
           {categories.map((category) => {
             const Icon = category.icon;
 
