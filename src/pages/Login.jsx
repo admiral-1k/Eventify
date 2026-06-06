@@ -32,7 +32,7 @@ export default function Login() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="w-full lg:w-[500px] bg-white/80 backdrop-blur-sm rounded-3xl m-4 lg:m-10 p-8 lg:p-12 shadow-lg">
+       <div className="w-full lg:w-[550px] bg-white/80 backdrop-blur-sm rounded-3xl m-4 lg:m-10 p-10 lg:p-14 shadow-xl">
 
           {/* EMAIL */}
           <div className="mb-6">
