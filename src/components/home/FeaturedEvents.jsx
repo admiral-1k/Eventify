@@ -1,6 +1,8 @@
 import Container from "../common/Container";
 import EventCard from "./EventCard";
 import bandPoster from "../../assets/images/bandPoster.jpeg";
+import sport from "../../assets/images/sport.png";
+import newariFood from "../../assets/images/newariFood.png";
 
 const events = [
   {
@@ -19,8 +21,8 @@ const events = [
     date: "June 3, 2026",
     location: "Nehru Stadium",
     price: "Rs. 999",
-    image:
-      "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=1600&auto=format&fit=crop'",
+    image: sport,
+      
   },
   {
     id: 3,
@@ -28,9 +30,8 @@ const events = [
     category: "Food",
     date: "July 3, 2026",
     location: "Bhaktapur, Nepal",
-    price: "Rs. 499",
-    image:
-      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop",
+    price: "Entry free",
+    image: newariFood,
   },
 ];
 
