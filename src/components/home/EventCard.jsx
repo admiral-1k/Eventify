@@ -3,8 +3,10 @@ import Button from "../common/Button";
 
 export default function EventCard({ event }) {
   return (
-    <article className="overflow-hidden rounded-2xl border border-neutral-100 bg-white 
-    shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+    <article
+      className="overflow-hidden rounded-2xl border border-neutral-100 bg-white
+      shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+    >
       <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
         <img
           src={event.image}
@@ -18,7 +20,10 @@ export default function EventCard({ event }) {
           <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700">
             {event.category}
           </span>
-          <span className="text-sm font-bold text-neutral-900">{event.price}</span>
+
+          <span className="text-sm font-bold text-neutral-900">
+            {event.price}
+          </span>
         </div>
 
         <h3 className="line-clamp-2 text-base font-bold text-neutral-950">
@@ -37,7 +42,9 @@ export default function EventCard({ event }) {
           </div>
         </div>
 
-        <Button className="mt-5 w-full">Book Ticket</Button>
+        <Button className="mt-5 w-full">
+          {event.buttonText || "Book Ticket"}
+        </Button>
       </div>
     </article>
   );
