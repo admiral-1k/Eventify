@@ -7,7 +7,7 @@ import newariFood from "../../assets/images/newariFood.png";
 const events = [
   {
     id: 1,
-    title: "Biken and The Merz live at XO club",
+    title: "Biken and The Merz Live at XO Club",
     category: "Music",
     date: "May 14, 2026",
     location: "Kathmandu, Nepal",
@@ -22,7 +22,6 @@ const events = [
     location: "Nehru Stadium",
     price: "Rs. 999",
     image: sport,
-      
   },
   {
     id: 3,
@@ -30,8 +29,9 @@ const events = [
     category: "Food",
     date: "July 3, 2026",
     location: "Bhaktapur, Nepal",
-    price: "Entry free",
+    price: "Entry Free",
     image: newariFood,
+    buttonText: "Free Entry",
   },
 ];
 
