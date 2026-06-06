@@ -1,4 +1,5 @@
 import { useState } from "react";
+import googleLogo from "../assets/images/google.png";
 
 export default function Login() {
 
@@ -83,8 +84,13 @@ export default function Login() {
           </div>
 
           {/* GOOGLE BUTTON */}
-          <button className="w-full border border-black py-4 rounded-full bg-white font-semibold hover:bg-gray-100 transition">
-            Sign in with Google
+        <button className="w-full border border-black py-4 rounded-full bg-white font-semibold hover:bg-gray-100 transition flex items-center justify-center gap-3">
+  <img
+    src={googleLogo}
+    alt="Google"
+    className="w-6 h-6"
+  />
+  <span>Sign in with Google</span>
           </button>
 
         </div>
