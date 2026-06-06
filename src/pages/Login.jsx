@@ -25,7 +25,7 @@ export default function Login() {
 
           <div className="mt-32 lg:mt-52 text-lg">
             Haven’t an Account?
-            <span className="text-blue-600 font-semibold cursor-pointer ml-2">
+            <span className="text-black font-semibold cursor-pointer ml-2">
               Click Here To Register
             </span>
           </div>
