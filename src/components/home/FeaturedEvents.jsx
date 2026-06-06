@@ -18,7 +18,7 @@ const events = [
     category: "Sports",
     date: "June 3, 2026",
     location: "Nehru Stadium",
-    price: "999",
+    price: "Rs. 999",
     image:
       "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=1600&auto=format&fit=crop'",
   },
