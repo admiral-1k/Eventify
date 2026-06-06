@@ -3,7 +3,8 @@ import Button from "../common/Button";
 
 export default function EventCard({ event }) {
   return (
-    <article className="overflow-hidden rounded-2xl border border-neutral-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+    <article className="overflow-hidden rounded-2xl border border-neutral-100 bg-white 
+    shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
         <img
           src={event.image}
