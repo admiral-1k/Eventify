@@ -79,7 +79,7 @@ export default function Navbar() {
       {open && (
         <div className="border-t border-neutral-100 bg-white px-4 py-4 lg:hidden">
           <div className="space-y-3">
-            <div className="flex h-11 items-center gap-2 rounded-full border border-neutral-200 px-4">
+            <div className="bg-orange-600">
               <Search size={18} className="text-neutral-400" />
               <input
                 type="text"
