@@ -6,10 +6,37 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+ const handleLogin = async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+
+    if (data.success) {
+      alert("Login Successful");
+    } else {
+      alert(data.message);
+    }
+
+  } catch (error) {
+    console.log(error);
+    alert("Something went wrong");
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center px-6 py-10">
