@@ -2,19 +2,22 @@ import { useState } from "react";
 import googleLogo from "../assets/images/google.png";
 
 export default function Login() {
-
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    console.log("Email:", email);
+    console.log("Password:", password);
+  };
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center px-6 py-10">
-
-      {/* MAIN CONTAINER */}
       <div className="w-full max-w-6xl rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-r from-[#4b2d67] to-[#f2b29c] flex flex-col lg:flex-row">
 
         {/* LEFT SIDE */}
         <div className="flex-1 text-white p-10 lg:p-20 flex flex-col justify-center">
-
-         <h1 className="text-4xl lg:text-5xl font-bold mb-8">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-8">
             Login Your Account
           </h1>
 
@@ -29,11 +32,10 @@ export default function Login() {
               Click Here To Register
             </span>
           </div>
-
         </div>
 
         {/* RIGHT SIDE */}
-       <div className="w-full lg:w-[550px] bg-white/80 backdrop-blur-sm rounded-3xl m-4 lg:m-10 p-10 lg:p-14 shadow-xl">
+        <div className="w-full lg:w-[550px] bg-white/80 backdrop-blur-sm rounded-3xl m-4 lg:m-10 p-10 lg:p-14 shadow-xl">
 
           {/* EMAIL */}
           <div className="mb-6">
@@ -44,6 +46,8 @@ export default function Login() {
             <input
               type="email"
               placeholder="Enter email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-400 rounded-full px-6 py-4 outline-none focus:border-pink-500"
             />
           </div>
@@ -55,10 +59,11 @@ export default function Login() {
             </label>
 
             <div className="relative">
-
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-400 rounded-full px-6 py-4 outline-none focus:border-pink-500"
               />
 
@@ -69,12 +74,14 @@ export default function Login() {
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
-
             </div>
           </div>
 
           {/* LOGIN BUTTON */}
-          <button className="w-full bg-pink-600 hover:bg-pink-700 transition text-white py-5 rounded-full text-lg font-semibold mb-6">
+          <button
+            onClick={handleLogin}
+            className="w-full bg-pink-600 hover:bg-pink-700 transition text-white py-5 rounded-full text-lg font-semibold mb-6"
+          >
             Login Account
           </button>
 
@@ -84,23 +91,17 @@ export default function Login() {
           </div>
 
           {/* GOOGLE BUTTON */}
-        <button className="w-full border border-black py-4 rounded-full bg-white font-semibold hover:bg-gray-100 transition flex items-center justify-center gap-3">
-  <img
-    src={googleLogo}
-    alt="Google"
-    className="w-6 h-6"
-  />
-  <span>Sign in with Google</span>
+          <button className="w-full border border-black py-4 rounded-full bg-white font-semibold hover:bg-gray-100 transition flex items-center justify-center gap-3">
+            <img
+              src={googleLogo}
+              alt="Google"
+              className="w-6 h-6"
+            />
+            <span>Sign in with Google</span>
           </button>
 
         </div>
-
       </div>
-
     </div>
   );
 }
-
-
-
-
