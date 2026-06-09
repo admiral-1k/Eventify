@@ -1,9 +1,27 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Container from "../components/common/Container";
 import logo from "../assets/images/logo.png";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const result = await login(email, password);
+    if (result.success) {
+      alert("Login Successful");
+      navigate("/all-events");
+    } else {
+      alert(result.message);
+    }
+  };
+
   return (
     <section className="min-h-[calc(100vh-64px)] bg-white py-10 sm:py-14">
       <Container>
@@ -27,7 +45,7 @@ export default function SignIn() {
               </p>
             </div>
 
-            <form className="mt-8 space-y-5">
+            <form className="mt-8 space-y-5" onSubmit={handleSignIn}>
               <div>
                 <label className="mb-2 block text-sm font-medium text-neutral-800">
                   Email address
@@ -38,6 +56,9 @@ export default function SignIn() {
                   <input
                     type="email"
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
                   />
                 </div>
@@ -62,6 +83,9 @@ export default function SignIn() {
                   <input
                     type="password"
                     placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
                   />
                 </div>
