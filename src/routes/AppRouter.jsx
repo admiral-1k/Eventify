@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp";
 import NotFound from "../pages/NotFound";
 import AllEvents from "../pages/AllEvents";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import ProtectedRoute from "../components/common/ProtectedRoute";
 
 
 export default function AppRoutes() {
@@ -21,8 +22,10 @@ export default function AppRoutes() {
     <Route path="/signup" element={<SignUp />} />
   </Route>
 
-  <Route element={<DashboardLayout />}>
-    <Route path="/all-events" element={<AllEvents />} />
+  <Route element={<ProtectedRoute />}>
+    <Route element={<DashboardLayout />}>
+      <Route path="/all-events" element={<AllEvents />} />
+    </Route>
   </Route>
 
   <Route path="*" element={<NotFound />} />
