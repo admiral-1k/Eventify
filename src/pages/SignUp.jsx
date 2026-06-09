@@ -1,9 +1,29 @@
-import { Link } from "react-router-dom";
-import { User, Mail, Phone, Lock, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { User, Mail, Phone, Lock, ArrowRight, Briefcase } from "lucide-react";
 import Container from "../components/common/Container";
 import logo from "../assets/images/logo.png";
 
 export default function SignUp() {
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
+  const navigate = useNavigate();
+  const { register } = useAuth();
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    const result = await register(fullname, email, password, role);
+    if (result.success) {
+      alert("Registration Successful");
+      navigate("/signin");
+    } else {
+      alert(result.message);
+    }
+  };
+
   return (
     <section className="min-h-[calc(100vh-64px)] bg-white py-10 sm:py-14">
       <Container>
@@ -28,7 +48,7 @@ export default function SignUp() {
               </p>
             </div>
 
-            <form className="mt-8 space-y-5">
+            <form className="mt-8 space-y-5" onSubmit={handleSignUp}>
               <div>
                 <label className="mb-2 block text-sm font-medium text-neutral-800">
                   Full name
@@ -39,6 +59,9 @@ export default function SignUp() {
                   <input
                     type="text"
                     placeholder="Enter your full name"
+                    value={fullname}
+                    onChange={(e) => setFullname(e.target.value)}
+                    required
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
                   />
                 </div>
@@ -54,6 +77,9 @@ export default function SignUp() {
                   <input
                     type="email"
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
                   />
                 </div>
@@ -84,8 +110,30 @@ export default function SignUp() {
                   <input
                     type="password"
                     placeholder="Create a password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
                   />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-neutral-800">
+                  Role
+                </label>
+
+                <div className="flex h-12 items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 transition focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
+                  <Briefcase size={18} className="text-neutral-400" />
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none"
+                  >
+                    <option value="user">User</option>
+                    <option value="eventor">Eventor</option>
+                    <option value="superadmin">Superadmin</option>
+                  </select>
                 </div>
               </div>
 
