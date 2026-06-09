@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./database/db");
 const userRoute = require("./route/userRoute");
+const seedSuperAdmin = require("./utils/seedAdmin");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get("/", async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
+  await seedSuperAdmin();
 });
