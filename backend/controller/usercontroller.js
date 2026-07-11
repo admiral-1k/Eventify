@@ -1,100 +1,78 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { createUser, getUserByEmail } = require("../model/userModel");
-
-const generateToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET || 'supersecretkey', {
-    expiresIn: '30d',
-  });
-};
+const authService = require("../service/authService");
 
 const registerUser = async (req, res) => {
-  console.log("REGISTER BODY:", req.body);
-
   try {
-    const { fullname, email, password, role } = req.body;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await createUser(
-      fullname,
-      email,
-      hashedPassword,
-      role
-    );
+    const { user, token } = await authService.register(req.body);
 
     res.status(201).json({
       success: true,
-      message: "User Registered Successfully",
-      user: {
-        id: user.id,
-        fullname: user.fullname,
-        email: user.email,
-        role: user.role
-      },
-      token: generateToken(user.id, user.role)
+      message:
+        user.role === "eventor"
+          ? "Event manager account registered. Waiting for super admin verification."
+          : "User Registered Successfully",
+      user,
+      token,
     });
-
   } catch (error) {
-    console.log(error);
-
-    res.status(500).json({
+    res.status(error.statusCode || 500).json({
       success: false,
-      message: "Registration Failed",
+      message: error.message || "Registration Failed",
     });
   }
 };
 
 const loginUser = async (req, res) => {
-  console.log("LOGIN BODY:", req.body);
-
   try {
-    const { email, password } = req.body;
-
-    const user = await getUserByEmail(email);
-
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    const isMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
-
-    if (!isMatch) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid password",
-      });
-    }
+    const { user, token } = await authService.login(req.body);
 
     res.status(200).json({
       success: true,
       message: "Login successful",
-      user: {
-        id: user.id,
-        fullname: user.fullname,
-        email: user.email,
-        role: user.role
-      },
-      token: generateToken(user.id, user.role)
+      user,
+      token,
     });
-
   } catch (error) {
-    console.log(error);
-
-    res.status(500).json({
+    res.status(error.statusCode || 500).json({
       success: false,
-      message: "Login failed",
+      message: error.message || "Login failed",
+    });
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { token } = await authService.requestPasswordReset(req.body);
+    res.json({
+      success: true,
+      message: "Reset token generated.",
+      token,
+    });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Could not create reset token",
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    await authService.resetPassword(req.body);
+    res.json({
+      success: true,
+      message: "Password reset successfully.",
+    });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Password reset failed",
     });
   }
 };
 
 module.exports = {
+  forgotPassword,
   registerUser,
   loginUser,
+  resetPassword,
 };

@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { registerUser, loginUser } = require("../controller/usercontroller");
-const { authenticate, authorize } = require("../middleware/authMiddleware");
+const { forgotPassword, registerUser, loginUser, resetPassword } = require("../controller/usercontroller");
 
 // Public routes
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 // Protected: any logged-in user
 // router.get("/profile", authenticate, getProfile);
@@ -17,4 +18,4 @@ router.post("/login", loginUser);
 // Protected: superadmin only
 // router.get("/admin/users", authenticate, authorize("superadmin"), getAllUsers);
 
-module.exports = router;
+module.exports = router;
