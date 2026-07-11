@@ -4,8 +4,9 @@ import logoWhite from "../../assets/images/logo-white.png";
 const footerLinks = [
   { label: "Home", href: "/" },
   { label: "Find Events", href: "/events" },
-  { label: "Create Events", href: "/create-event" },
-  { label: "Find my tickets", href: "/my-tickets" },
+  { label: "Calendar", href: "/event-calendar" },
+  { label: "Login", href: "/signin" },
+  { label: "Sign Up", href: "/signup" },
 ];
 
 export default function Footer() {
@@ -37,7 +38,7 @@ export default function Footer() {
 
       <div className="border-t border-white/20">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-1 px-4 py-4 text-center text-xs text-white/85 sm:px-6 lg:px-8">
-          <span>© 2026 eventify. All rights reserved.</span>
+          <span>(c) 2026 Eventify. All rights reserved.</span>
           <span className="hidden sm:inline">|</span>
 
           <Link to="/privacy-policy" className="hover:text-white">

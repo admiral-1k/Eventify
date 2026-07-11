@@ -1,41 +1,19 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Container from "../common/Container";
 import EventCard from "./EventCard";
-import bandPoster from "../../assets/images/bandPoster.jpeg";
-import sport from "../../assets/images/sport.png";
-import newariFood from "../../assets/images/newariFood.png";
-
-const events = [
-  {
-    id: 1,
-    title: "Biken and The Merz Live at XO Club",
-    category: "Music",
-    date: "May 14, 2026",
-    location: "Kathmandu, Nepal",
-    price: "Rs. 999",
-    image: bandPoster,
-  },
-  {
-    id: 2,
-    title: "Nepal vs Bangladesh",
-    category: "Sports",
-    date: "June 3, 2026",
-    location: "Nehru Stadium",
-    price: "Rs. 999",
-    image: sport,
-  },
-  {
-    id: 3,
-    title: "Food Festival 2026",
-    category: "Food",
-    date: "July 3, 2026",
-    location: "Bhaktapur, Nepal",
-    price: "Entry Free",
-    image: newariFood,
-    buttonText: "Free Entry",
-  },
-];
+import { eventStore } from "../../data/eventStore";
+import { useAuth } from "../../context/AuthContext";
+import { bookEventForUser, shareEvent, toggleFavoriteForUser } from "../../utils/eventActions";
 
 export default function FeaturedEvents() {
+  const { user } = useAuth();
+  const [events, setEvents] = useState(eventStore.getEvents());
+  const [favorites, setFavorites] = useState(eventStore.getFavorites());
+  const featuredEvents = events
+    .filter((event) => event.status === "approved")
+    .slice(0, 3);
+
   return (
     <section className="py-10">
       <Container>
@@ -49,14 +27,29 @@ export default function FeaturedEvents() {
             </h2>
           </div>
 
-          <button className="hidden text-sm font-semibold text-orange-600 hover:text-orange-700 sm:block">
+          <Link to="/events" className="hidden text-sm font-semibold text-orange-600 hover:text-orange-700 sm:block">
             View all
-          </button>
+          </Link>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
+          {featuredEvents.map((event) => (
+            <EventCard
+              key={event.id}
+              event={event}
+              onBook={(selectedEvent) => {
+                const result = bookEventForUser(selectedEvent, user, events);
+                setEvents(result.events);
+              }}
+              onFavorite={(selectedEvent) => {
+                const result = toggleFavoriteForUser(selectedEvent, user, favorites);
+                setFavorites(result.favorites);
+              }}
+              onShare={shareEvent}
+              isFavorite={favorites.some(
+                (favorite) => favorite.eventId === event.id && favorite.userId === user?.id
+              )}
+            />
           ))}
         </div>
       </Container>
