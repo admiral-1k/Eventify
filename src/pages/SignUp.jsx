@@ -2,25 +2,36 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { User, Mail, Phone, Lock, ArrowRight, Briefcase } from "lucide-react";
+import toast from "react-hot-toast";
 import Container from "../components/common/Container";
 import logo from "../assets/images/logo.png";
 
 export default function SignUp() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const navigate = useNavigate();
   const { register } = useAuth();
 
+  const routeByRole = (value) => {
+    if (value === "eventor") return "/manager";
+    return "/dashboard";
+  };
+
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const result = await register(fullname, email, password, role);
+    const result = await register(fullname, email, password, role, {
+      phone,
+      companyName,
+    });
     if (result.success) {
-      alert("Registration Successful");
-      navigate("/signin");
+      toast.success(role === "eventor" ? "Account created. Waiting for admin verification." : "Account created successfully.");
+      navigate(routeByRole(role));
     } else {
-      alert(result.message);
+      toast.error(result.message);
     }
   };
 
@@ -95,10 +106,35 @@ export default function SignUp() {
                   <input
                     type="tel"
                     placeholder="98XXXXXXXX"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
                   />
                 </div>
               </div>
+
+              {role === "eventor" && (
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-neutral-800">
+                    Company / event group name
+                  </label>
+
+                  <div className="flex h-12 items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 transition focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
+                    <Briefcase size={18} className="text-neutral-400" />
+                    <input
+                      type="text"
+                      placeholder="Enter company or event group"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      required={role === "eventor"}
+                      className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
+                    />
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-neutral-500">
+                    Event manager accounts need super admin verification before they can add events.
+                  </p>
+                </div>
+              )}
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-neutral-800">
@@ -131,8 +167,7 @@ export default function SignUp() {
                     className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none"
                   >
                     <option value="user">User</option>
-                    <option value="eventor">Eventor</option>
-                    <option value="superadmin">Superadmin</option>
+                    <option value="eventor">Event manager / company</option>
                   </select>
                 </div>
               </div>

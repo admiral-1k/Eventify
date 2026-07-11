@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Mail, Lock, ArrowRight } from "lucide-react";
+import toast from "react-hot-toast";
 import Container from "../components/common/Container";
 import logo from "../assets/images/logo.png";
 
@@ -11,14 +12,21 @@ export default function SignIn() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  const routeByRole = (role) => {
+    if (role === "superadmin") return "/admin";
+    if (role === "eventor") return "/manager";
+    return "/dashboard";
+  };
+
   const handleSignIn = async (e) => {
     e.preventDefault();
     const result = await login(email, password);
     if (result.success) {
-      alert("Login Successful");
-      navigate("/all-events");
+      const savedUser = JSON.parse(localStorage.getItem("user"));
+      toast.success("Signed in successfully.");
+      navigate(routeByRole(savedUser?.role));
     } else {
-      alert(result.message);
+      toast.error(result.message);
     }
   };
 
