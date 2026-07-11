@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Nepal",
+    "cities": ["Kathmandu", "Bhaktapur", "Lalitpur", "Patan", "Pokhara", "Chitwan", "Biratnagar"]
+  },
+  {
+    "name": "India",
+    "cities": ["New Delhi", "Mumbai", "Bengaluru", "Kolkata", "Jaipur", "Pune"]
+  },
+  {
+    "name": "United States",
+    "cities": ["New York", "Los Angeles", "Chicago", "San Francisco", "Austin", "Seattle"]
+  },
+  {
+    "name": "United Kingdom",
+    "cities": ["London", "Manchester", "Birmingham", "Leeds", "Edinburgh"]
+  },
+  {
+    "name": "Australia",
+    "cities": ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"]
+  }
+]
