@@ -3,6 +3,7 @@ const cors = require("cors");
 const pool = require("./config/database");
 const env = require("./config/env");
 const userRoute = require("./route/userRoute");
+const eventRoute = require("./route/eventRoute");
 
 const createApp = () => {
   const app = express();
@@ -16,6 +17,7 @@ const createApp = () => {
   app.use(express.json());
 
   app.use("/api/users", userRoute);
+  app.use("/api/events", eventRoute);
 
   app.get("/", async (req, res) => {
     try {
