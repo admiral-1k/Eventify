@@ -18,7 +18,7 @@ import MyBookings from "../pages/MyBookings";
 import SupportTickets from "../pages/SupportTickets";
 import ManagerDashboard from "../pages/ManagerDashboard";
 import AdminDashboard from "../pages/AdminDashboard";
-import CreateTicket from "../pages/CreateTicket";
+
 
 export default function AppRoutes() {
   return (
@@ -34,7 +34,7 @@ export default function AppRoutes() {
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/all-events" element={<Navigate to="/events" replace />} />
         <Route path="/event-calendar" element={<EventCalendar />} />
-        <Route path="/create-ticket" element={<CreateTicket />} />
+        
       </Route>
 
       <Route element={<ProtectedRoute />}>
