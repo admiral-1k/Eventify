@@ -17,13 +17,14 @@ import logo from "../../assets/images/logo.png";
 
 const linksByRole = {
   user: [
-    { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Browse Events", href: "/events", icon: CalendarDays },
-    { label: "My Calendar", href: "/my-calendar", icon: CalendarDays },
-    { label: "Bookings", href: "/my-bookings", icon: Ticket },
-    { label: "Favorites", href: "/favorites", icon: Heart },
-    { label: "Support", href: "/support", icon: LifeBuoy },
-  ],
+  { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Browse Events", href: "/events", icon: CalendarDays },
+  { label: "My Calendar", href: "/my-calendar", icon: CalendarDays },
+  { label: "Bookings", href: "/my-bookings", icon: Ticket },
+  { label: "Favorites", href: "/favorites", icon: Heart },
+  { label: "Create Ticket", href: "/create-ticket", icon: PlusCircle },
+  { label: "Support", href: "/support", icon: LifeBuoy },
+],
   eventor: [
     { label: "Manager", href: "/manager", icon: LayoutDashboard },
     { label: "Create Event", href: "/manager/create-event", icon: PlusCircle },
