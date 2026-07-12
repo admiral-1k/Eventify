@@ -27,6 +27,8 @@ describe("User Controller Tests", () => {
     jest.clearAllMocks();
   });
 
+  // ---------------- Register ----------------
+
   describe("registerUser", () => {
 
     test("should register user successfully", async () => {
@@ -49,7 +51,27 @@ describe("User Controller Tests", () => {
 
     });
 
+    test("should return error if registration fails", async () => {
+
+      authService.register.mockRejectedValue({
+        statusCode: 400,
+        message: "Registration Failed",
+      });
+
+      await registerUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Registration Failed",
+      });
+
+    });
+
   });
+
+  // ---------------- Login ----------------
 
   describe("loginUser", () => {
 
@@ -72,7 +94,27 @@ describe("User Controller Tests", () => {
 
     });
 
+    test("should return error if login fails", async () => {
+
+      authService.login.mockRejectedValue({
+        statusCode: 401,
+        message: "Invalid credentials",
+      });
+
+      await loginUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Invalid credentials",
+      });
+
+    });
+
   });
+
+  // ---------------- Forgot Password ----------------
 
   describe("forgotPassword", () => {
 
@@ -90,9 +132,17 @@ describe("User Controller Tests", () => {
 
       expect(authService.requestPasswordReset).toHaveBeenCalled();
 
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: "Reset token generated.",
+        token: "reset123",
+      });
+
     });
 
   });
+
+  // ---------------- Reset Password ----------------
 
   describe("resetPassword", () => {
 
@@ -108,6 +158,11 @@ describe("User Controller Tests", () => {
       await resetPassword(req, res);
 
       expect(authService.resetPassword).toHaveBeenCalled();
+
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: "Password reset successfully.",
+      });
 
     });
 
