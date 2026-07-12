@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -183,3 +184,24 @@ export default function EventCalendar({ bookedOnly = false }) {
     </section>
   );
 }
+=======
+import "./EventCalendar.css";
+
+export default function EventCalendar() {
+  return (
+    <div className="min-h-screen bg-[#f8f8f8] px-6 py-12">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-center text-[#4b3567] mb-10">
+          Event Calendar
+        </h1>
+
+        <div className="bg-white rounded-2xl shadow-md p-10 text-center">
+          <p className="text-lg text-gray-600">
+            Event Calendar page is under development.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+>>>>>>> Stashed changes
