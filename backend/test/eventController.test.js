@@ -35,6 +35,8 @@ describe("Event Controller Tests", () => {
     jest.clearAllMocks();
   });
 
+  // ---------------- Fetch All Events ----------------
+
   describe("fetchEvents", () => {
 
     test("should return all events", async () => {
@@ -59,7 +61,23 @@ describe("Event Controller Tests", () => {
 
     });
 
+    test("should return 500 if fetching events fails", async () => {
+
+      eventModel.getAllEvents.mockRejectedValue(new Error("Database Error"));
+
+      await fetchEvents(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Failed to fetch events",
+      });
+
+    });
+
   });
+
+  // ---------------- Fetch Single Event ----------------
 
   describe("fetchEvent", () => {
 
@@ -93,12 +111,29 @@ describe("Event Controller Tests", () => {
 
     });
 
+    test("should return 500 if fetching single event fails", async () => {
+
+      req.params.id = 1;
+
+      eventModel.getEventById.mockRejectedValue(new Error("Database Error"));
+
+      await fetchEvent(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Failed to fetch event",
+      });
+
+    });
+
   });
+
+  // ---------------- Add Event ----------------
 
   describe("addEvent", () => {
 
-    test("should create new event", async () => {
-
+    beforeEach(() => {
       req.body = {
         title: "Rock Show",
         description: "Live",
@@ -111,6 +146,9 @@ describe("Event Controller Tests", () => {
         total_tickets: 100,
         organizer_id: 1,
       };
+    });
+
+    test("should create new event", async () => {
 
       eventModel.createEvent.mockResolvedValue(req.body);
 
@@ -121,17 +159,35 @@ describe("Event Controller Tests", () => {
 
     });
 
+    test("should return 500 if event creation fails", async () => {
+
+      eventModel.createEvent.mockRejectedValue(new Error("Database Error"));
+
+      await addEvent(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Failed to create event",
+      });
+
+    });
+
   });
+
+  // ---------------- Edit Event ----------------
 
   describe("editEvent", () => {
 
-    test("should update event", async () => {
-
+    beforeEach(() => {
       req.params.id = 1;
 
       req.body = {
         title: "Updated Event",
       };
+    });
+
+    test("should update event", async () => {
 
       eventModel.updateEvent.mockResolvedValue({
         id: 1,
@@ -140,26 +196,56 @@ describe("Event Controller Tests", () => {
       await editEvent(req, res);
 
       expect(eventModel.updateEvent).toHaveBeenCalled();
-
       expect(res.status).toHaveBeenCalledWith(200);
+
+    });
+
+    test("should return 500 if update fails", async () => {
+
+      eventModel.updateEvent.mockRejectedValue(new Error("Database Error"));
+
+      await editEvent(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Failed to update event",
+      });
 
     });
 
   });
 
+  // ---------------- Delete Event ----------------
+
   describe("removeEvent", () => {
 
-    test("should delete event", async () => {
-
+    beforeEach(() => {
       req.params.id = 1;
+    });
+
+    test("should delete event", async () => {
 
       eventModel.deleteEvent.mockResolvedValue();
 
       await removeEvent(req, res);
 
       expect(eventModel.deleteEvent).toHaveBeenCalledWith(1);
-
       expect(res.status).toHaveBeenCalledWith(200);
+
+    });
+
+    test("should return 500 if delete fails", async () => {
+
+      eventModel.deleteEvent.mockRejectedValue(new Error("Database Error"));
+
+      await removeEvent(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: "Failed to delete event",
+      });
 
     });
 
