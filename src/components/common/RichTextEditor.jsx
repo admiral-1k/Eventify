@@ -1,5 +1,5 @@
 import { Bold, Italic, List, ListOrdered } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 const tools = [
   { command: "bold", icon: Bold, label: "Bold" },
@@ -8,14 +8,29 @@ const tools = [
   { command: "insertOrderedList", icon: ListOrdered, label: "Numbered" },
 ];
 
-export default function RichTextEditor({ value, onChange, disabled = false }) {
+export default function RichTextEditor({
+  value,
+  onChange,
+  disabled = false,
+}) {
   const editorRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      editorRef.current &&
+      editorRef.current.innerHTML !== value
+    ) {
+      editorRef.current.innerHTML = value || "";
+    }
+  }, [value]);
 
   const runCommand = (command) => {
     if (disabled) return;
-    editorRef.current?.focus();
+
+    editorRef.current.focus();
     document.execCommand(command);
-    onChange(editorRef.current?.innerHTML || "");
+
+    onChange(editorRef.current.innerHTML);
   };
 
   return (
@@ -23,27 +38,28 @@ export default function RichTextEditor({ value, onChange, disabled = false }) {
       <div className="flex gap-1 border-b border-neutral-200 p-2">
         {tools.map((tool) => {
           const Icon = tool.icon;
+
           return (
             <button
               key={tool.command}
               type="button"
-              onClick={() => runCommand(tool.command)}
               disabled={disabled}
               title={tool.label}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100 disabled:opacity-50"
+              onClick={() => runCommand(tool.command)}
+              className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-neutral-100 disabled:opacity-50"
             >
               <Icon size={17} />
             </button>
           );
         })}
       </div>
+
       <div
         ref={editorRef}
         contentEditable={!disabled}
         suppressContentEditableWarning
-        onInput={(event) => onChange(event.currentTarget.innerHTML)}
-        dangerouslySetInnerHTML={{ __html: value }}
-        className="min-h-32 rounded-b-lg px-3 py-3 text-sm leading-6 outline-none empty:before:text-neutral-400"
+        onInput={(e) => onChange(e.currentTarget.innerHTML)}
+        className="min-h-32 rounded-b-lg px-3 py-3 text-sm leading-6 outline-none"
       />
     </div>
   );

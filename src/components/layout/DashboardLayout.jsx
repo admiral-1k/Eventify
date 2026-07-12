@@ -22,7 +22,6 @@ const linksByRole = {
   { label: "My Calendar", href: "/my-calendar", icon: CalendarDays },
   { label: "Bookings", href: "/my-bookings", icon: Ticket },
   { label: "Favorites", href: "/favorites", icon: Heart },
-  { label: "Create Ticket", href: "/create-ticket", icon: PlusCircle },
   { label: "Support", href: "/support", icon: LifeBuoy },
 ],
   eventor: [
