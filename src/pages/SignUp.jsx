@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { User, Mail, Phone, Lock, ArrowRight, Briefcase } from "lucide-react";
+import { User, Mail, Phone, Lock, ArrowRight, Briefcase,Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 import Container from "../components/common/Container";
 import logo from "../assets/images/logo.png";
@@ -16,6 +16,7 @@ export default function SignUp() {
   const [role, setRole] = useState("user");
   const navigate = useNavigate();
   const { register } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
 
   const routeByRole = (value) => {
     if (value === "eventor") return "/manager";
@@ -168,22 +169,31 @@ const handleSignUp = async (e) => {
               )}
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-neutral-800">
-                  Password
-                </label>
+  <label className="mb-2 block text-sm font-medium text-neutral-800">
+    Password
+  </label>
 
-                <div className="flex h-12 items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 transition focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
-                  <Lock size={18} className="text-neutral-400" />
-                  <input
-                    type="password"
-                    placeholder="Create a password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
-                  />
-                </div>
-              </div>
+  <div className="flex h-12 items-center rounded-2xl border border-neutral-200 bg-white px-4 transition focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
+    <Lock size={18} className="text-neutral-400" />
+
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Create a password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+      className="flex-1 border-none bg-transparent px-3 text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="text-neutral-400 hover:text-orange-600"
+    >
+      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+    </button>
+  </div>
+</div>
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-neutral-800">
