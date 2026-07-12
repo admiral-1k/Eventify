@@ -10,6 +10,7 @@ export default function SignUp() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
@@ -21,19 +22,33 @@ export default function SignUp() {
     return "/dashboard";
   };
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    const result = await register(fullname, email, password, role, {
-      phone,
-      companyName,
-    });
-    if (result.success) {
-      toast.success(role === "eventor" ? "Account created. Waiting for admin verification." : "Account created successfully.");
-      navigate(routeByRole(role));
-    } else {
-      toast.error(result.message);
-    }
-  };
+const handleSignUp = async (e) => {
+  e.preventDefault();
+
+  // Check if phone contains only numbers and is exactly 10 digits
+  if (!/^\d{10}$/.test(phone)) {
+    setPhoneError("Phone number must be exactly 10 digits.");
+    toast.error("Please enter a valid phone number.");
+    return;
+  }
+
+  const result = await register(fullname, email, password, role, {
+    phone,
+    companyName,
+  });
+
+  if (result.success) {
+    toast.success(
+      role === "eventor"
+        ? "Account created. Waiting for admin verification."
+        : "Account created successfully."
+    );
+
+    navigate(routeByRole(role));
+  } else {
+    toast.error(result.message);
+  }
+};
 
   return (
     <section className="min-h-[calc(100vh-64px)] bg-white py-10 sm:py-14">
@@ -96,22 +111,38 @@ export default function SignUp() {
                 </div>
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-neutral-800">
-                  Phone number
-                </label>
+       <div>
+  <label className="mb-2 block text-sm font-medium text-neutral-800">
+    Phone number
+  </label>
 
-                <div className="flex h-12 items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 transition focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
-                  <Phone size={18} className="text-neutral-400" />
-                  <input
-                    type="tel"
-                    placeholder="98XXXXXXXX"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
-                  />
-                </div>
-              </div>
+  <div className="flex h-12 items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 transition focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
+    <Phone size={18} className="text-neutral-400" />
+
+    <input
+      type="tel"
+      placeholder="98XXXXXXXX"
+      value={phone}
+      onChange={(e) => {
+        const value = e.target.value;
+
+        if (/^\d*$/.test(value)) {
+          setPhone(value);
+          setPhoneError("");
+        } else {
+          setPhoneError("Phone number can contain only numbers.");
+        }
+      }}
+      className="w-full border-none bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
+    />
+  </div>
+
+  {phoneError && (
+    <p className="mt-2 text-sm text-red-500">
+      {phoneError}
+    </p>
+  )}
+</div>
 
               {role === "eventor" && (
                 <div>
